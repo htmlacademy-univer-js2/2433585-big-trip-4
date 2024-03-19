@@ -1,4 +1,4 @@
-import { createElement } from "../render";
+import { createElement } from '../render';
 
 function createPointEditTemplate() {
   return (
@@ -177,7 +177,7 @@ export default class PointEditView {
       this.element = createElement(this.getTemplate());
     }
 
-  return this.element
+    return this.element;
   }
 
   removeElement (){

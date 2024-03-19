@@ -1,4 +1,4 @@
-import { createElement } from "../render";
+import { createElement } from '../render';
 
 function createSortTemplate() {
   return (
@@ -41,7 +41,7 @@ export default class SortView {
       this.element = createElement(this.getTemplate());
     }
 
-  return this.element
+    return this.element;
   }
 
   removeElement (){

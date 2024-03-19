@@ -1,4 +1,4 @@
-import { createElement } from "../render.js";
+import { createElement } from '../render.js';
 
 function createFilterTemplate() {
   return (
@@ -37,7 +37,7 @@ export default class FilterView {
       this.element = createElement(this.getTemplate());
     }
 
-  return this.element
+    return this.element;
   }
 
   removeElement (){

@@ -1,6 +1,8 @@
-import { createElement } from "../render";
+import { createElement } from '../render';
 
-function createEventListTemplate() { return `<ul class="trip-events__list"></ul>` }
+function createEventListTemplate() {
+  return '<ul class="trip-events__list"></ul>';
+}
 
 export default class EventListView {
   getTemplate () {
@@ -12,7 +14,7 @@ export default class EventListView {
       this.element = createElement(this.getTemplate());
     }
 
-  return this.element
+    return this.element;
   }
 
   removeElement (){

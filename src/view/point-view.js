@@ -1,4 +1,4 @@
-import { createElement } from "../render";
+import { createElement } from '../render';
 
 function createPointTemplate() {
   return (
@@ -57,7 +57,7 @@ export default class PointView {
       this.element = createElement(this.getTemplate());
     }
 
-  return this.element
+    return this.element;
   }
 
   removeElement (){

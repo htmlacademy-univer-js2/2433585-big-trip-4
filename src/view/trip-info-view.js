@@ -1,8 +1,8 @@
-import { createElement } from "../render";
+import { createElement } from '../render';
 
 function createTripInfoTemplate() {
   return (
-  `<section class="trip-main__trip-info  trip-info">
+    `<section class="trip-main__trip-info  trip-info">
     <div class="trip-info__main">
       <h1 class="trip-info__title">Amsterdam &mdash; Chamonix &mdash; Geneva</h1>
 
@@ -26,7 +26,7 @@ export default class TripInfoView {
       this.element = createElement(this.getTemplate());
     }
 
-  return this.element
+    return this.element;
   }
 
   removeElement (){
