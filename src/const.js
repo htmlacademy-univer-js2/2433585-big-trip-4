@@ -47,11 +47,11 @@ const IMAGES = [];
 const IMAGES_COUNT = {
   MIN: 1,
   MAX: 4
-}
-
-for (let i = 0; i < IMAGES_COUNT.MAX; i++){
-  IMAGES.push(`${IMG}${getRandomInteger(IMAGES_COUNT.MIN, IMAGES_COUNT.MAX)}`)
 };
+
+for (let i = 0; i < IMAGES_COUNT.MAX; i++) {
+  IMAGES.push(`${IMG}${getRandomInteger(IMAGES_COUNT.MIN, IMAGES_COUNT.MAX)}`);
+}
 
 const Price = {
   MIN: 10,

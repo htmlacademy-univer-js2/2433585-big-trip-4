@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import duration from 'dayjs/plugin/duration'
+import duration from 'dayjs/plugin/duration';
 
 dayjs.extend(duration);
 
@@ -18,25 +18,25 @@ function getDate(next) {
 
   if (next) {
     return dayjs(date)
-    .add(randomDay, 'day')
-    .add(randomHour, 'hour')
-    .add(randomMin, 'minute')
-    .toDate();
+      .add(randomDay, 'day')
+      .add(randomHour, 'hour')
+      .add(randomMin, 'minute')
+      .toDate();
   }
 
   return date;
 }
 
-function getTime(date) {
-  return dayjs(date).format('hh:mm');
+function getTime(data) {
+  return dayjs(data).format('hh:mm');
 }
 
-function getMonthAndDate(date) {
-  return dayjs(date).format('MMM DD');
+function getMonthAndDate(data) {
+  return dayjs(data).format('MMM DD');
 }
 
-function getFullDate(date) {
-  return dayjs(date).format('DD/MM/YY hh:mm');
+function getFullDate(data) {
+  return dayjs(data).format('DD/MM/YY hh:mm');
 }
 
 function getDateDifference(from, to) {
@@ -66,4 +66,4 @@ function getRandomValue(array){
   return array[getRandomInteger(0, array.length - 1)];
 }
 
-export {getRandomInteger, getRandomValue, getDate, getTime, getMonthAndDate, getDateDifference, getFullDate}
+export {getRandomInteger, getRandomValue, getDate, getTime, getMonthAndDate, getDateDifference, getFullDate};

@@ -50,6 +50,7 @@ export default class PointView {
   constructor({ data }) {
     this.point = data;
   }
+
   getTemplate () {
     return createPointTemplate(this.point);
   }

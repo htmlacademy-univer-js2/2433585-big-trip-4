@@ -10,4 +10,4 @@ function getOffers() {
   };
 }
 
-export {getOffers}
+export {getOffers};

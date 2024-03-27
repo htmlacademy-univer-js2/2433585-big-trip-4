@@ -7,7 +7,7 @@ import { getRandomValue } from '../utils.js';
 export default class PointModel {
   cityModel = new CitiesModel();
   cities = this.cityModel.get();
-  city = getRandomValue(this.cities)
+  city = getRandomValue(this.cities);
   points = Array.from({ length: POINTS_COUNT }, () => {
 
     const offerModel = new OffersModel();
