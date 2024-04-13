@@ -1,4 +1,4 @@
-import { FilterType, filters } from '../const';
+import { filters } from '../const';
 
 
 function generateFilters(points) {

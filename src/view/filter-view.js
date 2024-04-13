@@ -11,7 +11,7 @@ function createFilterItemTemplate(filter, isChecked) {
 
 function createFilterTemplate(filterItems) {
   const filterItemsTemplate = filterItems.map((filter, index) =>
-  createFilterItemTemplate(filter, index === 0))
+    createFilterItemTemplate(filter, index === 0))
     .join('');
 
   return `
@@ -30,8 +30,6 @@ export default class FilterView extends AbstractView {
     super();
     this.#filters = filters;
   }
-
-
 
   get template () {
     return createFilterTemplate(this.#filters);
