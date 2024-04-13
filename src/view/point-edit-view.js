@@ -1,4 +1,4 @@
-import { createElement } from '../render.js';
+import AbstractView from '../framework/view/abstract-view';
 import { EVENTS, CITIES, OFFERS, IMAGES, Price } from '../const.js';
 import { getRandomInteger, getFullDate } from '../utils.js';
 
@@ -54,6 +54,9 @@ function createPointEditTemplate(point) {
 
           <button class="event__save-btn  btn  btn--blue" type="submit">Save</button>
           <button class="event__reset-btn" type="reset">Cancel</button>
+          <button class="event__rollup-btn" type="button">
+            <span class="visually-hidden">Open event</span>
+          </button>
         </header>
         <section class="event__details">
           <section class="event__section  event__section--offers">
@@ -96,24 +99,24 @@ function isChecked(offers, title) {
   return check ? 'checked' : '';
 }
 
-export default class PointEditView {
-  constructor({ point }) {
-    this.point = point;
+export default class PointEditView extends AbstractView {
+  #point = null;
+  #handleClick = null;
+
+  constructor({ point, onFormSubmit }) {
+    super();
+    this.#point = point;
+    this.#handleClick = onFormSubmit;
+    this.element.querySelector('.event--edit').addEventListener('submit', this.#clickHandler);
+    this.element.querySelector('.event__rollup-btn').addEventListener('click', this.#clickHandler);
   }
 
-  getTemplate () {
-    return createPointEditTemplate(this.point);
+  get template () {
+    return createPointEditTemplate(this.#point);
   }
 
-  getElement () {
-    if (!this.element) {
-      this.element = createElement(this.getTemplate());
-    }
-
-    return this.element;
-  }
-
-  removeElement (){
-    this.element = null ;
-  }
+  #clickHandler = (evt) => {
+    evt.preventDefault();
+    this.#handleClick();
+  };
 }

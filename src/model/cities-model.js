@@ -2,16 +2,17 @@ import { getCity } from '../mock/cities.js';
 import { CITIES_COUNT } from '../const.js';
 
 export default class CitiesModel {
+  #city = null;
   constructor() {
-    this.city = Array.from({ length: CITIES_COUNT }, () => getCity());
+    this.#city = Array.from({ length: CITIES_COUNT }, () => getCity());
   }
 
   get() {
-    return this.city;
+    return this.#city;
   }
 
   getById(id) {
-    this.city.forEach((cit) => {
+    this.#city.forEach((cit) => {
       if (cit.id === id) {
         return cit;
       }
@@ -21,11 +22,11 @@ export default class CitiesModel {
   }
 
   getCityID() {
-    return this.city.map((cit) => cit.id);
+    return this.#city.map((cit) => cit.id);
   }
 
   getDescription(id) {
-    this.city.forEach((cit) => {
+    this.#city.forEach((cit) => {
       if (cit.id === id) {
         return cit.description;
       }

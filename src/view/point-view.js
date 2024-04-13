@@ -1,4 +1,4 @@
-import { createElement } from '../render.js';
+import AbstractView from '../framework/view/abstract-view';
 import { getDateDifference, getTime, getMonthAndDate } from '../utils.js';
 
 function createPointTemplate(point) {
@@ -46,23 +46,23 @@ function isFavorite(check) {
   return check ? 'event__favorite-btn--active' : '';
 }
 
-export default class PointView {
-  constructor({ data }) {
-    this.point = data;
-  }
-  getTemplate () {
-    return createPointTemplate(this.point);
+export default class PointView extends AbstractView {
+  #point = null;
+  #handleClick = null;
+
+  constructor({ point, onClick }) {
+    super();
+    this.#point = point;
+    this.#handleClick = onClick;
+    this.element.querySelector('.event__rollup-btn').addEventListener('click', this.#clickHandler);
   }
 
-  getElement () {
-    if (!this.element) {
-      this.element = createElement(this.getTemplate());
-    }
-
-    return this.element;
+  get template() {
+    return createPointTemplate(this.#point);
   }
 
-  removeElement (){
-    this.element = null ;
-  }
+  #clickHandler = (evt) => {
+    evt.preventDefault();
+    this.#handleClick();
+  };
 }
