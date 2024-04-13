@@ -27,10 +27,19 @@ export default class BoardPresenter {
   }
 
   #renderPoint({ point }) {
+
+    const onEscKeyDown = (evt) => {
+      if (evt.key === 'Escape') {
+        evt.preventDefault();
+        editToEvent();
+        document.removeEventListener('keydown', onEscKeyDown);
+      }
+    };
+
     const pointViewComponent = new PointView({
       point,
       onClick: () => {
-        replace(pointEditViewComponent, pointViewComponent);
+        eventToEdit();
         document.addEventListener('keydown', onEscKeyDown);
       }
     });
@@ -38,18 +47,18 @@ export default class BoardPresenter {
     const pointEditViewComponent = new PointEditView({
       point,
       onFormSubmit: () => {
-        replace(pointViewComponent, pointEditViewComponent);
+        editToEvent();
         document.removeEventListener('keydown', onEscKeyDown);
       }
     });
 
-    const onEscKeyDown = (evt) => {
-      if (evt.key === 'Escape') {
-        evt.preventDefault();
-        replace(pointViewComponent, pointEditViewComponent);
-        document.removeEventListener('keydown', onEscKeyDown);
-      }
-    };
+    function eventToEdit() {
+      replace(pointEditViewComponent, pointViewComponent);
+    }
+
+    function editToEvent() {
+      replace(pointViewComponent, pointEditViewComponent);
+    }
 
 
     render(pointViewComponent, this.#eventListComponent.element);
