@@ -15,7 +15,7 @@ export default class PointModel {
 
     const cityId = this.city.id;
     const point = getPoints(cityId, offersId);
-    point.destination = this.city.destination;
+    point.destination = this.cityModel.getById(cityId);
     point.offers = offerModel.get();
     point.description = this.city.description;
     return point;
