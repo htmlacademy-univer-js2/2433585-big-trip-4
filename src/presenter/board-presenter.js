@@ -4,6 +4,7 @@ import EventListView from '../view/event-list-view.js';
 import PointEditView from '../view/point-edit-view.js';
 import PointView from '../view/point-view.js';
 import { POINTS_COUNT } from '../const.js';
+import EventEmptyListTemplate from '../view/event-list-empty.js';
 
 export default class BoardPresenter {
   #eventListComponent = new EventListView();
@@ -18,6 +19,11 @@ export default class BoardPresenter {
   }
 
   init() {
+
+    if (this.#points.length === 0){
+      render(new EventEmptyListTemplate(), this.#boardContainer);
+      return;
+    }
     render(new SortView(), this.#boardContainer);
     render(this.#eventListComponent, this.#boardContainer);
 

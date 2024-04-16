@@ -1,7 +1,7 @@
 
-import { getRandomInteger } from './utils.js';
+import { getRandomInteger, pastPoint, futurePoint, presentPoint } from './utils.js';
 
-const POINTS_COUNT = 3;
+const POINTS_COUNT = getRandomInteger(0, 8);
 
 const CITIES = [
   'Moscow',
@@ -58,4 +58,19 @@ const Price = {
   MAX: 2000
 };
 
-export {CITIES, EVENTS, OFFERS, DESCRIPTION, IMAGES, Price, POINTS_COUNT, CITIES_COUNT, OFFERS_COUNT, IMG, IMAGES_COUNT };
+const FilterType = {
+  EVERYTHING: 'everything',
+  FUTURE: 'future',
+  PRESENT: 'present',
+  PAST: 'past',
+};
+
+const filters = {
+  [FilterType.EVERYTHING]: (points) => [points],
+  [FilterType.FUTURE]: (points) => points.filter((point) => futurePoint(point)),
+  [FilterType.PRESENT]: (points) => points.filter((point) => presentPoint(point)),
+  [FilterType.PAST]: (points) => points.filter((point) => pastPoint(point)),
+};
+
+
+export {CITIES, EVENTS, OFFERS, DESCRIPTION, IMAGES, Price, POINTS_COUNT, CITIES_COUNT, OFFERS_COUNT, IMG, IMAGES_COUNT, FilterType, filters };

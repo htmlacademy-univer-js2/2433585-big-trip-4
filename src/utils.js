@@ -66,4 +66,17 @@ function getRandomValue(array){
   return array[getRandomInteger(0, array.length - 1)];
 }
 
-export {getRandomInteger, getRandomValue, getDate, getTime, getMonthAndDate, getDateDifference, getFullDate};
+function pastPoint(point) {
+  return dayjs().isAfter(point.dateTo);
+}
+
+function futurePoint(point) {
+  return dayjs().isBefore(point.dateFrom);
+}
+
+function presentPoint(point) {
+  return dayjs().isAfter(point.dateFrom) && dayjs().isBefore(point.dateTo);
+}
+
+
+export {getRandomInteger, getRandomValue, getDate, getTime, getMonthAndDate, getDateDifference, getFullDate, pastPoint, futurePoint, presentPoint };
