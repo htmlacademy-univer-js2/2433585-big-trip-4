@@ -1,16 +1,19 @@
-import { render, replace } from '../framework/render.js';
+import { render } from '../framework/render.js';
 import SortView from '../view/sort-view.js';
 import EventListView from '../view/event-list-view.js';
-import PointEditView from '../view/point-edit-view.js';
-import PointView from '../view/point-view.js';
+import PointPresenter from './point-presenter.js';
 import { POINTS_COUNT } from '../const.js';
 import EventEmptyListTemplate from '../view/event-list-empty.js';
+import { updateItem } from '../utils.js';
 
 export default class BoardPresenter {
-  #eventListComponent = new EventListView();
-  #pointModel = null;
   #boardContainer = null;
-  #points = null;
+  #eventListComponent = new EventListView();
+  #sortComponent = new SortView();
+
+  #pointModel = null;
+  #points = [];
+  #pointPresenters = new Map();
 
   constructor ({boardContainer, pointModel}) {
     this.#boardContainer = boardContainer;
@@ -19,54 +22,60 @@ export default class BoardPresenter {
   }
 
   init() {
+    this.#renderBoard();
+  }
 
-    if (this.#points.length === 0){
-      render(new EventEmptyListTemplate(), this.#boardContainer);
-      return;
-    }
-    render(new SortView(), this.#boardContainer);
-    render(this.#eventListComponent, this.#boardContainer);
+  #modeChangeHandler = () => {
+    this.#pointPresenters.forEach((presenter) => presenter.resetView());
+  };
 
-    for(let i = 0; i < POINTS_COUNT; i++) {
-      this.#renderPoint({ point: this.#points[i] });
+  #pointChangeHandler = (updatedPoint) => {
+    this.#points = updateItem(this.#points, updatedPoint);
+    this.#pointPresenters.get(updatedPoint.id).init(updatedPoint);
+  };
+
+  #renderPoint(point) {
+    const pointPresenter = new PointPresenter({
+      pointContainer: this.#eventListComponent.element,
+      onDataChange: this.#pointChangeHandler,
+      onModeChange: this.#modeChangeHandler
+    });
+
+    pointPresenter.init(point);
+    this.#pointPresenters.set(point.id, pointPresenter);
+  }
+
+  #renderNoPointView() {
+    render(new EventEmptyListTemplate(), this.#eventListComponent.element);
+  }
+
+  #renderPoints() {
+    for (let i = 0; i < POINTS_COUNT; i++) {
+      this.#renderPoint(this.#points[i]);
     }
   }
 
-  #renderPoint({ point }) {
+  #renderSort() {
+    render(this.#sortComponent, this.#boardContainer);
+  }
 
-    const onEscKeyDown = (evt) => {
-      if (evt.key === 'Escape') {
-        evt.preventDefault();
-        editToEvent();
-        document.removeEventListener('keydown', onEscKeyDown);
-      }
-    };
+  #renderPointList() {
+    render(this.#eventListComponent, this.#boardContainer);
+  }
 
-    const pointViewComponent = new PointView({
-      point,
-      onClick: () => {
-        eventToEdit();
-        document.addEventListener('keydown', onEscKeyDown);
-      }
-    });
+  #clearPointList() {
+    this.#pointPresenters.forEach((presenter) => presenter.destroy());
+    this.#pointPresenters.clear();
+  }
 
-    const pointEditViewComponent = new PointEditView({
-      point,
-      onFormSubmit: () => {
-        editToEvent();
-        document.removeEventListener('keydown', onEscKeyDown);
-      }
-    });
+  #renderBoard() {
+    this.#renderPoints();
 
-    function eventToEdit() {
-      replace(pointEditViewComponent, pointViewComponent);
+    if (this.#points.length === 0) {
+      this.#renderNoPointView();
     }
 
-    function editToEvent() {
-      replace(pointViewComponent, pointEditViewComponent);
-    }
-
-
-    render(pointViewComponent, this.#eventListComponent.element);
+    this.#renderSort();
+    this.#renderPointList();
   }
 }
