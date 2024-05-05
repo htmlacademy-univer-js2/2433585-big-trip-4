@@ -72,5 +72,10 @@ const filters = {
   [FilterType.PAST]: (points) => points.filter((point) => pastPoint(point)),
 };
 
+const Mode = {
+  DEFAULT: 'DEFAULT',
+  EDITING: 'EDITING',
+};
 
-export {CITIES, EVENTS, OFFERS, DESCRIPTION, IMAGES, Price, POINTS_COUNT, CITIES_COUNT, OFFERS_COUNT, IMG, IMAGES_COUNT, FilterType, filters };
+
+export {CITIES, EVENTS, OFFERS, DESCRIPTION, IMAGES, Price, POINTS_COUNT, CITIES_COUNT, OFFERS_COUNT, IMG, IMAGES_COUNT, FilterType, filters, Mode };

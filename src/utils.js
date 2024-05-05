@@ -78,5 +78,11 @@ function presentPoint(point) {
   return dayjs().isAfter(point.dateFrom) && dayjs().isBefore(point.dateTo);
 }
 
+function updateItem(items, update) {
+  return items.map((item) => item.id === update.id ? update : item);
+}
 
-export {getRandomInteger, getRandomValue, getDate, getTime, getMonthAndDate, getDateDifference, getFullDate, pastPoint, futurePoint, presentPoint };
+export {getRandomInteger, getRandomValue, getDate,
+  getTime, getMonthAndDate, getDateDifference,
+  getFullDate, pastPoint, futurePoint,
+  presentPoint, updateItem };

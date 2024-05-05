@@ -8,7 +8,7 @@ function getPoints(cityId, offersId) {
     dateFrom: getDate({next: false}),
     dateTo: getDate({next: true}),
     destination: cityId,
-    isFavorite: !!getRandomInteger(0, 1),
+    isFavorite: getRandomInteger(0, 2),
     offers: offersId,
     type: getRandomValue(EVENTS)
   };
