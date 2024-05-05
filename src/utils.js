@@ -83,6 +83,6 @@ function updateItem(items, update) {
 }
 
 export {getRandomInteger, getRandomValue, getDate,
-   getTime, getMonthAndDate, getDateDifference,
-    getFullDate, pastPoint, futurePoint,
-     presentPoint, updateItem };
+  getTime, getMonthAndDate, getDateDifference,
+  getFullDate, pastPoint, futurePoint,
+  presentPoint, updateItem };
