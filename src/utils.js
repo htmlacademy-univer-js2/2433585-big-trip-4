@@ -61,7 +61,6 @@ function getRandomInteger(min, max) {
   return Math.floor(Math.random() * max) + min;
 }
 
-
 function getRandomValue(array){
   return array[getRandomInteger(0, array.length - 1)];
 }
@@ -82,7 +81,45 @@ function updateItem(items, update) {
   return items.map((item) => item.id === update.id ? update : item);
 }
 
-export {getRandomInteger, getRandomValue, getDate,
+function sortByDay(pointFirst, pointSecond) {
+  return dayjs(pointFirst.dateFrom) - dayjs(pointSecond.dateFrom);
+}
+
+function sortByTime(pointFirst, pointSecond) {
+  return dayjs(pointFirst.dateTo).diff(dayjs(pointFirst.dateFrom)) - dayjs(pointSecond.dateTo).diff(dayjs(pointSecond.dateFrom));
+}
+
+function sortByPrice(pointFirst, pointSecond) {
+  return pointFirst.basePrice - pointSecond.basePrice;
+}
+
+function sortByOffers(pointFirst, pointSecond) {
+  return pointFirst.offers.length - pointSecond.offers.length;
+}
+
+function sortByEvent(pointFirst, pointSecond) {
+  return (pointFirst.type.toLowerCase()).localeCompare(pointSecond.type.toLowerCase());
+}
+
+const generateTime = () => {
+  let beginDate = dayjs().minute(0);
+  const gap = 1000;
+  const getBeginDateMinutes = getRandomInteger(-gap, gap) * 10;
+  const getMinutesGap = getRandomInteger(3, 200) * 10;
+
+  beginDate = beginDate.add(getBeginDateMinutes, 'm');
+  const endDate = beginDate.add(getMinutesGap, 'm').toDate();
+  beginDate = beginDate.toDate();
+
+  return {
+    beginDate,
+    endDate
+  };
+};
+
+export { getRandomInteger, getRandomValue, getDate,
   getTime, getMonthAndDate, getDateDifference,
   getFullDate, pastPoint, futurePoint,
-  presentPoint, updateItem };
+  presentPoint, updateItem, sortByPrice,
+  sortByDay, sortByTime, generateTime,
+  sortByEvent, sortByOffers };

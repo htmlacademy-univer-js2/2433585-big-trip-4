@@ -5,7 +5,7 @@ import { getRandomInteger } from '../utils.js';
 export default class OffersModel{
   #offers = null;
   constructor(){
-    this.#offers = Array.from({length: getRandomInteger(1, OFFERS_COUNT) }, () => getOffers());
+    this.#offers = Array.from({length: getRandomInteger(0, OFFERS_COUNT) }, () => getOffers());
   }
 
   get() {

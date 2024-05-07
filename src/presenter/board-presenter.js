@@ -1,16 +1,17 @@
-import { render } from '../framework/render.js';
+import { render, remove } from '../framework/render.js';
 import SortView from '../view/sort-view.js';
 import EventListView from '../view/event-list-view.js';
 import PointPresenter from './point-presenter.js';
-import { POINTS_COUNT } from '../const.js';
+import { Sort } from '../const.js';
+import { RenderPosition } from '../framework/render.js';
 import EventEmptyListTemplate from '../view/event-list-empty.js';
 import { updateItem } from '../utils.js';
 
 export default class BoardPresenter {
   #boardContainer = null;
   #eventListComponent = new EventListView();
-  #sortComponent = new SortView();
-
+  #sortComponent = null;
+  #currentSortType = null;
   #pointModel = null;
   #points = [];
   #pointPresenters = new Map();
@@ -46,17 +47,42 @@ export default class BoardPresenter {
   }
 
   #renderNoPointView() {
-    render(new EventEmptyListTemplate(), this.#eventListComponent.element);
+    render(new EventEmptyListTemplate(),this.#boardContainer);
   }
 
   #renderPoints() {
-    for (let i = 0; i < POINTS_COUNT; i++) {
+    for (let i = 0; i < this.#points.length; i++) {
       this.#renderPoint(this.#points[i]);
     }
   }
 
+  #sortPoints = (sortType) => {
+    this.#currentSortType = sortType;
+    this.#points = Sort[this.#currentSortType](this.#points);
+  };
+
+  #handleSortTypeChange = (sortType) => {
+    if (this.#currentSortType === sortType) {
+      return;
+    }
+
+    this.#sortPoints(sortType);
+    this.#renderSort();
+    this.#clearPointList();
+    this.#renderPoints();
+  };
+
   #renderSort() {
-    render(this.#sortComponent, this.#boardContainer);
+    if (this.#sortComponent !== null) {
+      remove(this.#sortComponent);
+    }
+
+    this.#sortComponent = new SortView({
+      onSortTypeChange: this.#handleSortTypeChange,
+      currentSortType: this.#currentSortType
+    });
+
+    render(this.#sortComponent, this.#eventListComponent.element, RenderPosition.AFTERBEGIN);
   }
 
   #renderPointList() {
@@ -73,6 +99,7 @@ export default class BoardPresenter {
 
     if (this.#points.length === 0) {
       this.#renderNoPointView();
+      return;
     }
 
     this.#renderSort();

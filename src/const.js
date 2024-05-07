@@ -1,7 +1,7 @@
 
-import { getRandomInteger, pastPoint, futurePoint, presentPoint } from './utils.js';
+import { getRandomInteger, pastPoint, futurePoint, presentPoint, sortByDay, sortByPrice, sortByTime } from './utils.js';
 
-const POINTS_COUNT = getRandomInteger(0, 8);
+const POINTS_COUNT = getRandomInteger(1, 8);
 
 const CITIES = [
   'Moscow',
@@ -77,5 +77,25 @@ const Mode = {
   EDITING: 'EDITING',
 };
 
+const SortType = {
+  DAY: 'day',
+  EVENT: 'event',
+  TIME: 'time',
+  PRICE: 'price',
+  OFFERS: 'offers'
+};
 
-export {CITIES, EVENTS, OFFERS, DESCRIPTION, IMAGES, Price, POINTS_COUNT, CITIES_COUNT, OFFERS_COUNT, IMG, IMAGES_COUNT, FilterType, filters, Mode };
+const Sort = {
+  [SortType.DAY]: (points) => [...points].sort(sortByDay),
+  [SortType.TIME]: (points) => [...points].sort(sortByTime),
+  [SortType.PRICE]: (points) => [...points].sort(sortByPrice),
+  [SortType.EVENT]: () => {
+    throw new Error(`Sort by ${SortType.EVENT} is not inplemented`);
+  },
+  [SortType.OFFERS]: () => {
+    throw new Error(`Sort by ${SortType.OFFERS} is not inplemented`);
+  }
+};
+
+export {CITIES, EVENTS, OFFERS, DESCRIPTION, IMAGES, Price, POINTS_COUNT,
+  CITIES_COUNT, OFFERS_COUNT, IMG, IMAGES_COUNT, FilterType, filters, Mode, SortType, Sort };
