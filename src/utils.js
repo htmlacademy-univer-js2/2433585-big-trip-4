@@ -61,7 +61,6 @@ function getRandomInteger(min, max) {
   return Math.floor(Math.random() * max) + min;
 }
 
-
 function getRandomValue(array){
   return array[getRandomInteger(0, array.length - 1)];
 }
@@ -118,7 +117,7 @@ const generateTime = () => {
   };
 };
 
-export {  getRandomInteger, getRandomValue, getDate,
+export { getRandomInteger, getRandomValue, getDate,
   getTime, getMonthAndDate, getDateDifference,
   getFullDate, pastPoint, futurePoint,
   presentPoint, updateItem, sortByPrice,

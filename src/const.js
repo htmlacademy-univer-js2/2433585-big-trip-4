@@ -1,5 +1,5 @@
 
-import { getRandomInteger, pastPoint, futurePoint, presentPoint, sortByDay, sortByPrice, sortByTime, sortByEvent, sortByOffers } from './utils.js';
+import { getRandomInteger, pastPoint, futurePoint, presentPoint, sortByDay, sortByPrice, sortByTime } from './utils.js';
 
 const POINTS_COUNT = getRandomInteger(1, 8);
 

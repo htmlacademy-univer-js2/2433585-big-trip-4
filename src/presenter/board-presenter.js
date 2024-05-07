@@ -58,8 +58,8 @@ export default class BoardPresenter {
 
   #sortPoints = (sortType) => {
     this.#currentSortType = sortType;
-    this.#points = Sort[this.#currentSortType](this.#points)
-  }
+    this.#points = Sort[this.#currentSortType](this.#points);
+  };
 
   #handleSortTypeChange = (sortType) => {
     if (this.#currentSortType === sortType) {

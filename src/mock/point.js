@@ -1,4 +1,4 @@
-import { getRandomInteger, getDate, getRandomValue, generateTime } from '../utils.js';
+import { getRandomInteger, getRandomValue, generateTime } from '../utils.js';
 import { Price, EVENTS } from '../const.js';
 
 function getPoints(cityId, offersId) {
