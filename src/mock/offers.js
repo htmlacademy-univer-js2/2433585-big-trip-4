@@ -1,8 +1,8 @@
-import { getRandomInteger, getRandomValue } from '../utils.js';
-import { Price, OFFERS, EVENTS, OFFERS_COUNT } from '../const.js';
+import { getRandomInteger } from '../utils.js';
+import { Price, OFFERS, OFFERS_COUNT } from '../const.js';
 
 function getOffers(type) {
-   return {
+  return {
     type: type,
     offers: Array.from({ length: OFFERS_COUNT}, (_, index) => ({
       id: crypto.randomUUID(),

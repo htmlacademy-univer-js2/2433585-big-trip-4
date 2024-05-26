@@ -1,13 +1,14 @@
 import AbstractStatefulView from '../framework/view/abstract-stateful-view.js';
-import { EVENTS, CITIES, OFFERS, IMAGES, Price } from '../const.js';
-import { getRandomInteger, getFullDate } from '../utils.js';
+import { EVENTS, CITIES } from '../const.js';
+import { getFullDate } from '../utils.js';
+import dayjs from 'dayjs';
 
 function createImg(destinationImages) {
   return destinationImages.map((img) => `<img class="event__photo" src="${img}.jpg" alt="Event photo">`).join('');
 }
 
 function createPointEditTemplate(point, citiesPoint, offersPoint) {
-  const { type, offers, dateFrom, dateTo, basePrice } = point;
+  const { type, offers } = point;
   const currentOffers = offersPoint.find((offer) => offer.type === type);
   const currentCity = citiesPoint.find((city) => city.id === point.destination);
   return (
@@ -163,10 +164,10 @@ export default class PointEditView extends AbstractStatefulView {
   };
 
   #destinationChangeHandler = (evt) => {
-    const selectedDestination = this.#cities.find((city) => city.name === evt.target.value)
+    const selectedDestination = this.#cities.find((city) => city.name === evt.target.value);
     const selectedDestinationID = (selectedDestination)
-    ? selectedDestination.id
-    : null;
+      ? selectedDestination.id
+      : null;
 
     this.updateElement({
       point: {
@@ -174,12 +175,6 @@ export default class PointEditView extends AbstractStatefulView {
         destination: selectedDestinationID
       }
     });
-
-    // evt.preventDefault();
-    // const selectedDestinatio = this.#cities.find((destination) => destination.name === evt.target.value);
-    // this.updateElement({
-    //   destination: selectedDestination ? selectedDestination.id : null,
-    // });
   };
 
   #priceChangeHandler = (evt) => {

@@ -11,8 +11,7 @@ function getPoints( type, cityId, offersId) {
     dateTo: time.endDate,
     destination: cityId,
     isFavorite: !!getRandomInteger(0, 2),
-    offers: offersId,
-    type: getRandomValue(EVENTS)
+    offers: offersId
   };
 }
 

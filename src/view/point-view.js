@@ -24,8 +24,7 @@ function createPointTemplate(point, pointCity, pointOffers) {
         </p>
         <h4 class="visually-hidden">Offers:</h4>
         <ul class="event__selected-offers">
-        ${pointOffers.map((offer) =>
-          offers.includes(offer.id) ? `
+        ${pointOffers.map((offer) => offers.includes(offer.id) ? `
               <li class="event__offer">
                 <span class="event__offer-title">${offer.title}</span>
                 &plus;&euro;&nbsp;
