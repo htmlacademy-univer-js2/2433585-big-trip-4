@@ -1,25 +1,20 @@
 import { getOffers } from '../mock/offers.js';
-import { OFFERS_COUNT } from '../const.js';
-import { getRandomInteger } from '../utils.js';
+import { EVENTS } from '../const.js';
 
 export default class OffersModel{
-  #offers = null;
-  constructor(){
-    this.#offers = Array.from({length: getRandomInteger(0, OFFERS_COUNT) }, () => getOffers());
+  #offers = [];
+  constructor() {
+    EVENTS.forEach((type) => { const offersType = getOffers(type);
+      this.#offers.push(offersType);
+    });
   }
 
   get() {
     return this.#offers;
   }
 
-  getById(id) {
-    this.#offers.forEach((offer) => {
-      if (offer.id === id) {
-        return offer;
-      }
-    });
-
-    return '';
+  getByType(type) {
+    return this.#offers.find((offer) => offer.type === type).offers;
   }
 
   getID() {

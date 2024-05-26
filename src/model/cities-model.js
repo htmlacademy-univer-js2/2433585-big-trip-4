@@ -4,7 +4,7 @@ import { CITIES_COUNT } from '../const.js';
 export default class CitiesModel {
   #city = null;
   constructor() {
-    this.#city = Array.from({ length: CITIES_COUNT }, () => getCity());
+    this.#city = Array.from({ length: CITIES_COUNT }, (_, i) => getCity(i));
   }
 
   get() {
@@ -12,13 +12,7 @@ export default class CitiesModel {
   }
 
   getById(id) {
-    this.#city.forEach((cit) => {
-      if (cit.id === id) {
-        return cit;
-      }
-    });
-
-    return '';
+    return this.#city.find((cit) => cit.id === id);
   }
 
   getCityID() {

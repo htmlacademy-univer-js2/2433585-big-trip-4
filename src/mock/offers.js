@@ -1,12 +1,15 @@
-import { getRandomInteger, getRandomValue } from '../utils.js';
-import { Price, OFFERS, EVENTS } from '../const.js';
+import { getRandomInteger } from '../utils.js';
+import { Price, OFFERS, OFFERS_COUNT } from '../const.js';
 
-function getOffers() {
+function getOffers(type) {
   return {
-    id: crypto.randomUUID(),
-    title: getRandomValue(OFFERS),
-    type: getRandomValue(EVENTS),
-    price: getRandomInteger(Price.MIN, Price.MAX)
+    type: type,
+    offers: Array.from({ length: OFFERS_COUNT}, (_, index) => ({
+      id: crypto.randomUUID(),
+      title: OFFERS[index],
+      price: getRandomInteger(Price.MIN, Price.MAX)
+
+    }))
   };
 }
 

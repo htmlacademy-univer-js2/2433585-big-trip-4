@@ -15,11 +15,15 @@ export default class BoardPresenter {
   #pointModel = null;
   #points = [];
   #pointPresenters = new Map();
+  #citiesModel = null;
+  #offersModel = null;
 
-  constructor ({boardContainer, pointModel}) {
+  constructor ({boardContainer, pointModel, citiesModel, offersModel }) {
     this.#boardContainer = boardContainer;
     this.#pointModel = pointModel;
     this.#points = [...this.#pointModel.get()];
+    this.#citiesModel = citiesModel;
+    this.#offersModel = offersModel;
   }
 
   init() {
@@ -38,6 +42,8 @@ export default class BoardPresenter {
   #renderPoint(point) {
     const pointPresenter = new PointPresenter({
       pointContainer: this.#eventListComponent.element,
+      citiesModel: this.#citiesModel,
+      offersModel: this.#offersModel,
       onDataChange: this.#pointChangeHandler,
       onModeChange: this.#modeChangeHandler
     });
