@@ -1,28 +1,34 @@
 import { getPoints } from '../mock/point.js';
-import CitiesModel from './cities-model.js';
-import { POINTS_COUNT } from '../const.js';
-import OffersModel from './offers-model.js';
+import { POINTS_COUNT, EVENTS } from '../const.js';
 import { getRandomValue } from '../utils.js';
+import { sortByDay } from '../utils.js';
 
 export default class PointModel {
-  cityModel = new CitiesModel();
-  cities = this.cityModel.get();
-  city = getRandomValue(this.cities);
-  points = Array.from({ length: POINTS_COUNT }, () => {
+  points = [];
+  #offerModel = null;
+  #cityModel = null;
+  constructor(offerM, cityM) {
+    this.#offerModel = offerM;
+    this.#cityModel = cityM;
 
-    const offerModel = new OffersModel();
-    const offersId = offerModel.getID();
-
-    const cityId = this.city.id;
-    const point = getPoints(cityId, offersId);
-    point.destination = this.cityModel.getById(cityId);
-    point.offers = offerModel.get();
-    point.description = this.city.description;
-    return point;
-  });
+    this.points = Array.from({ length: POINTS_COUNT }, () => {
+      const type = getRandomValue(EVENTS);
+      const cities = this.#cityModel.get();
+      const destinationId = getRandomValue(cities).id;
+      const offers = this.#offerModel.getByType(type);
+      const offersId = [];
+      offers.forEach((offer) => {
+        if (getRandomValue(0, 2)) {
+          offersId.push(offer.id);
+        }
+      });
+      const point = getPoints(type, destinationId, offersId);
+      return point;
+    });
+  }
 
   get() {
-    return this.points;
+    return this.points.sort(sortByDay);
   }
 }
 

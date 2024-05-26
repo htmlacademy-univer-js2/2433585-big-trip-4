@@ -6,8 +6,9 @@ function getCity() {
     id: crypto.randomUUID(),
     name: getRandomValue(CITIES),
     description: getRandomValue(DESCRIPTION.split('.')).repeat(getRandomInteger(1, 5)),
-    pictures: `${IMG}${getRandomInteger(IMAGES_COUNT.MIN, IMAGES_COUNT.MAX)}`
-  };
-}
+    pictures: Array.from({ length: getRandomInteger(IMAGES_COUNT.MIN, IMAGES_COUNT.MAX) }, () => `${IMG}${getRandomInteger(0, 100)}`)
 
+  };
+
+}
 export { getCity };
