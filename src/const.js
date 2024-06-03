@@ -1,7 +1,10 @@
-
-import { getRandomInteger, pastPoint, futurePoint, presentPoint, sortByDay, sortByPrice, sortByTime } from './utils.js';
+import dayjs from 'dayjs';
+import { getRandomInteger } from './utils/common-utils';
+import { futurePoint, presentPoint, pastPoint, sortByDay, sortByPrice, sortByTime } from './utils/point-utils';
 
 const POINTS_COUNT = getRandomInteger(1, 8);
+const CITIES_COUNT = 8;
+const DEFAULT_TYPE = 'Taxi';
 
 const CITIES = [
   'Moscow',
@@ -14,7 +17,20 @@ const CITIES = [
   'Kamchatka'
 ];
 
-const CITIES_COUNT = 8;
+const DISABLED_SORTS = [
+  'event',
+  'offers'
+];
+
+const EMPTY_POINT = {
+  type: DEFAULT_TYPE,
+  basePrice: 0,
+  dateFrom: dayjs().toDate(),
+  dateTo: dayjs().toDate(),
+  destination: null,
+  isFavorite: false,
+  offers: []
+};
 
 const EVENTS = [
   'Bus',
@@ -66,7 +82,7 @@ const FilterType = {
 };
 
 const filters = {
-  [FilterType.EVERYTHING]: (points) => [points],
+  [FilterType.EVERYTHING]: (points) => points,
   [FilterType.FUTURE]: (points) => points.filter((point) => futurePoint(point)),
   [FilterType.PRESENT]: (points) => points.filter((point) => presentPoint(point)),
   [FilterType.PAST]: (points) => points.filter((point) => pastPoint(point)),
@@ -85,6 +101,31 @@ const SortType = {
   OFFERS: 'offers'
 };
 
+const UserAction = {
+  UPDATE_POINT: 'UPDATE_POINT',
+  ADD_POINT: 'ADD_POINT',
+  DELETE_POINT: 'DELETE_POINT',
+};
+
+const UpdateType = {
+  PATCH: 'PATCH',
+  MINOR: 'MINOR',
+  MAJOR: 'MAJOR',
+};
+
+const ButtonText = {
+  CANCEL: 'Cancel',
+  DELETE: 'Delete',
+  SAVE: 'Save'
+};
+
+const NoTasksTextType = {
+  [FilterType.EVERYTHING]: 'Click New Event to create your first point',
+  [FilterType.FUTURE]: 'There are no future events now',
+  [FilterType.PRESENT]: 'There are no present events now',
+  [FilterType.PAST]: 'There are no past events now',
+};
+
 const Sort = {
   [SortType.DAY]: (points) => [...points].sort(sortByDay),
   [SortType.TIME]: (points) => [...points].sort(sortByTime),
@@ -98,4 +139,5 @@ const Sort = {
 };
 
 export {CITIES, EVENTS, OFFERS, DESCRIPTION, IMAGES, Price, POINTS_COUNT,
-  CITIES_COUNT, OFFERS_COUNT, IMG, IMAGES_COUNT, FilterType, filters, Mode, SortType, Sort };
+  CITIES_COUNT, OFFERS_COUNT, IMG, IMAGES_COUNT, FilterType, filters, Mode, SortType, Sort, EMPTY_POINT,
+  UserAction, NoTasksTextType, UpdateType, ButtonText, DISABLED_SORTS };

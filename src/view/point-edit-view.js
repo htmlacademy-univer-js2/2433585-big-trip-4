@@ -1,8 +1,8 @@
 import AbstractStatefulView from '../framework/view/abstract-stateful-view.js';
 import { EVENTS, CITIES } from '../const.js';
-import { getFullDate } from '../utils.js';
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
+import { getFullDate } from '../utils/point-utils.js';
 
 function createImg(destinationImages) {
   return destinationImages.map((img) => `<img class="event__photo" src="${img}.jpg" alt="Event photo">`).join('');

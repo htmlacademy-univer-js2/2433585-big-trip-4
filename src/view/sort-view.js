@@ -1,9 +1,9 @@
-import { SortType } from '../const';
+import { DISABLED_SORTS, SortType } from '../const';
 import AbstractView from '../framework/view/abstract-view';
 
 function createSortItemsTemplate(type, currentSortType) {
   return `<div class="trip-sort__item  trip-sort__item--${type}">
-            <input id="sort-${type}" class="trip-sort__input  visually-hidden" data-sort-type="${type}" type="radio" name="trip-sort" value="sort-offer" ${currentSortType === type ? 'checked' : ''}>
+            <input id="sort-${type}" class="trip-sort__input  visually-hidden" data-sort-type="${type}" type="radio" name="trip-sort" value="sort-${type}" ${currentSortType === type ? 'checked' : ''} ${DISABLED_SORTS.includes(type) ? 'disabled' : ''}>
             <label class="trip-sort__btn" for="sort-${type}">${type}</label>
           </div>`;
 }
