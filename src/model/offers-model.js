@@ -1,14 +1,14 @@
-import { getOffers } from '../mock/offers.js';
-import { EVENTS } from '../const.js';
-import Observable from '../framework/observable';
-
-export default class OffersModel extends Observable {
+export default class OffersModel {
   #offers = [];
-  constructor() {
-    super();
-    EVENTS.forEach((type) => { const offersType = getOffers(type);
-      this.#offers.push(offersType);
-    });
+  #pointApiService = null;
+
+  constructor(pointApiService) {
+    this.#pointApiService = pointApiService;
+  }
+
+  async init() {
+    this.#offers = await this.#pointApiService.offers;
+    return this.#offers;
   }
 
   get offers() {
@@ -17,9 +17,5 @@ export default class OffersModel extends Observable {
 
   getOffersByType(type) {
     return this.#offers.find((offer) => offer.type === type).offers;
-  }
-
-  getID() {
-    return this.#offers.map((offer) => offer.id);
   }
 }

@@ -1,42 +1,42 @@
-import { getPoints } from '../mock/point.js';
-import { POINTS_COUNT, EVENTS } from '../const.js';
-import { getRandomValue } from '../utils/common-utils.js';
+import { UpdateType } from '../const.js';
 import { sortByDay, updateItem } from '../utils/point-utils.js';
 import Observable from '../framework/observable';
+import { adaptToClient } from '../utils/adapt-utils.js';
 
 export default class PointModel extends Observable {
   #points = [];
-  #offerModel = null;
-  #cityModel = null;
+  #pointApiService = null;
 
-  constructor(offerModel, cityModel) {
+  constructor(pointApiService) {
     super();
-    this.#offerModel = offerModel;
-    this.#cityModel = cityModel;
+    this.#pointApiService = pointApiService;
+    this.#points = [];
+  }
 
-    this.#points = Array.from({ length: POINTS_COUNT }, () => {
-      const type = getRandomValue(EVENTS);
-      const cities = this.#cityModel.get();
-      const destinationId = getRandomValue(cities).id;
-      const offers = this.#offerModel.getOffersByType(type);
-      const offersId = [];
-      offers.forEach((offer) => {
-        if (getRandomValue(0, 2)) {
-          offersId.push(offer.id);
-        }
-      });
-      const point = getPoints(type, destinationId, offersId);
-      return point;
-    });
+  async init() {
+    try {
+      const points = await this.#pointApiService.points;
+      this.#points = points.map(adaptToClient);
+    } catch (err) {
+      this.#points = [];
+    }
+
+    this._notify(UpdateType.INIT);
   }
 
   get points() {
     return this.#points.sort(sortByDay);
   }
 
-  updatePoint(updateType, update) {
-    this.#points = updateItem(this.#points, update);
-    this._notify(updateType, update);
+  async updatePoint(updateType, update) {
+    try {
+      const response = await this.#pointApiService.updatePoint(update);
+      const updatePoint = adaptToClient(response);
+      this.#points = updateItem(this.#points, updatePoint);
+      this._notify(updateType, updatePoint);
+    } catch (err) {
+      throw new Error('Can\'t update task');
+    }
   }
 
   addPoint(updateType, update) {

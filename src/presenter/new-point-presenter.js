@@ -12,10 +12,10 @@ export default class NewPointPresenter {
 
   #pointEditComponent = null;
 
-  constructor({ pointListContainer, cityModel, offerModel, changeDataHandler, destroyHandler }) {
+  constructor({ pointListContainer, citiesModel, offersModel, changeDataHandler, destroyHandler }) {
     this.#pointListContainer = pointListContainer;
-    this.#cityModel = cityModel;
-    this.#offersModel = offerModel;
+    this.#cityModel = citiesModel;
+    this.#offersModel = offersModel;
     this.#handleDataChange = changeDataHandler;
     this.#handleDestroy = destroyHandler;
   }
@@ -26,8 +26,8 @@ export default class NewPointPresenter {
     }
 
     this.#pointEditComponent = new PointEditView({
-      pointDestinations: this.#cityModel.getCities(),
-      pointOffers: this.#offersModel.getOffers(),
+      pointDestinations: this.#cityModel.cities,
+      pointOffers: this.#offersModel.offers,
       onFormSubmit: this.#handleEditSubmit,
       onEditDelete: this.#handleResetClick,
       isNewPoint: true

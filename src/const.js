@@ -2,9 +2,9 @@ import dayjs from 'dayjs';
 import { getRandomInteger } from './utils/common-utils';
 import { futurePoint, presentPoint, pastPoint, sortByDay, sortByPrice, sortByTime } from './utils/point-utils';
 
-const POINTS_COUNT = getRandomInteger(1, 8);
-const CITIES_COUNT = 8;
-const DEFAULT_TYPE = 'Taxi';
+const DEFAULT_TYPE = 'taxi';
+const IMG = 'https://loremflickr.com/248/152?random=';
+const IMAGES = [];
 
 const CITIES = [
   'Moscow',
@@ -54,12 +54,7 @@ const OFFERS = [
   'Lunch in city',
   'Upgrade to a business class'
 ];
-const OFFERS_COUNT = 8;
 
-const DESCRIPTION = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquet varius magna, non porta ligula feugiat eget. Fusce tristique felis at fermentum pharetra. Aliquam id orci ut lectus varius viverra. Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante. Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum. Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui. Sed sed nisi sed augue convallis suscipit in sed felis. Aliquam erat volutpat. Nunc fermentum tortor ac porta dapibus. In rutrum ac purus sit amet tempus.';
-
-const IMG = 'https://loremflickr.com/248/152?random=';
-const IMAGES = [];
 const IMAGES_COUNT = {
   MIN: 1,
   MAX: 4
@@ -111,6 +106,7 @@ const UpdateType = {
   PATCH: 'PATCH',
   MINOR: 'MINOR',
   MAJOR: 'MAJOR',
+  INIT: 'INIT'
 };
 
 const ButtonText = {
@@ -119,11 +115,14 @@ const ButtonText = {
   SAVE: 'Save'
 };
 
-const NoTasksTextType = {
-  [FilterType.EVERYTHING]: 'Click New Event to create your first point',
-  [FilterType.FUTURE]: 'There are no future events now',
-  [FilterType.PRESENT]: 'There are no present events now',
-  [FilterType.PAST]: 'There are no past events now',
+const Method = {
+  GET: 'GET',
+  PUT: 'PUT',
+};
+
+const NoPointsTextType = {
+  NOPOINTS: 'Click New Event to create your first point',
+  LOADING: 'Loading...',
 };
 
 const Sort = {
@@ -138,6 +137,6 @@ const Sort = {
   }
 };
 
-export {CITIES, EVENTS, OFFERS, DESCRIPTION, IMAGES, Price, POINTS_COUNT,
-  CITIES_COUNT, OFFERS_COUNT, IMG, IMAGES_COUNT, FilterType, filters, Mode, SortType, Sort, EMPTY_POINT,
-  UserAction, NoTasksTextType, UpdateType, ButtonText, DISABLED_SORTS };
+export {CITIES, EVENTS, OFFERS, IMAGES, Price, IMG, IMAGES_COUNT,
+  FilterType, filters, Mode, SortType, Sort, EMPTY_POINT,
+  UserAction, NoPointsTextType, UpdateType, ButtonText, DISABLED_SORTS, Method };
