@@ -1,19 +1,21 @@
 import { getOffers } from '../mock/offers.js';
 import { EVENTS } from '../const.js';
+import Observable from '../framework/observable';
 
-export default class OffersModel{
+export default class OffersModel extends Observable {
   #offers = [];
   constructor() {
+    super();
     EVENTS.forEach((type) => { const offersType = getOffers(type);
       this.#offers.push(offersType);
     });
   }
 
-  get() {
+  get offers() {
     return this.#offers;
   }
 
-  getByType(type) {
+  getOffersByType(type) {
     return this.#offers.find((offer) => offer.type === type).offers;
   }
 

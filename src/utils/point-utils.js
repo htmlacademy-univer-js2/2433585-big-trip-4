@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
+import { getRandomInteger } from './common-utils';
 
 dayjs.extend(duration);
 
@@ -57,14 +58,6 @@ function getDateDifference(from, to) {
   return pointDur;
 }
 
-function getRandomInteger(min, max) {
-  return Math.floor(Math.random() * max) + min;
-}
-
-function getRandomValue(array){
-  return array[getRandomInteger(0, array.length - 1)];
-}
-
 function pastPoint(point) {
   return dayjs().isAfter(point.dateTo);
 }
@@ -117,9 +110,15 @@ const generateTime = () => {
   };
 };
 
-export { getRandomInteger, getRandomValue, getDate,
+function hasBigDifference(point1, point2) {
+  return point1.price !== point2.price || getDateDifference(point1.dateFrom, point1.dateTo) !== getDateDifference(point2.dateFrom, point2.dateTo);
+}
+
+export {
+  getDate,
   getTime, getMonthAndDate, getDateDifference,
   getFullDate, pastPoint, futurePoint,
   presentPoint, updateItem, sortByPrice,
   sortByDay, sortByTime, generateTime,
-  sortByEvent, sortByOffers };
+  sortByEvent, sortByOffers, hasBigDifference
+};
