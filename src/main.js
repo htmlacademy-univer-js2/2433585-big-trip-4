@@ -7,6 +7,10 @@ import CitiesModel from './model/cities-model.js';
 import FilterModel from './model/filter-model.js';
 import FilterPresenter from './presenter/filter-presenter.js';
 import NewPointButtonView from './view/new-point-button-view.js';
+import PointsApiService from './point-api-service.js';
+
+const AUTHORIZATION = 'Basic d7akf7fha9sdf22S';
+const END_POINT = 'https://21.objects.htmlacademy.pro/big-trip';
 
 const bodyElement = document.querySelector('body');
 const headerElement = bodyElement.querySelector('.page-header');
@@ -14,10 +18,12 @@ const tripMainElement = headerElement.querySelector('.trip-main');
 const filterElement = tripMainElement.querySelector('.trip-controls__filters');
 const mainElement = bodyElement.querySelector('.page-main');
 const tripEvents = mainElement.querySelector('.trip-events');
-const offersModel = new OffersModel();
-const citiesModel = new CitiesModel();
+const pointApiService = new PointsApiService(END_POINT, AUTHORIZATION);
+
+const offersModel = new OffersModel(pointApiService);
+const citiesModel = new CitiesModel(pointApiService);
 const filterModel = new FilterModel();
-const pointModel = new PointModel(offersModel, citiesModel);
+const pointModel = new PointModel(pointApiService);
 const boardPresenter = new BoardPresenter({
   boardContainer: tripEvents,
   pointModel, offersModel,
@@ -49,3 +55,10 @@ render(newPointButtonComponent, tripMainElement, RenderPosition.BEFOREEND);
 
 filterPresenter.init();
 boardPresenter.init();
+offersModel.init().finally(() => {
+  citiesModel.init().finally(() => {
+    pointModel.init().finally(() => {
+      render(newPointButtonComponent, tripMainElement, RenderPosition.BEFOREEND);
+    });
+  });
+});

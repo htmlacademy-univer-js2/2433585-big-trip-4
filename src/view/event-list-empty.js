@@ -1,11 +1,22 @@
-import AbstractView from '../framework/view/abstract-view.js';
+import { NoPointsTextType } from '../const';
+import AbstractView from '../framework/view/abstract-view';
 
-function createEventEmptyListTemplate() {
-  return '<p class="trip-events__msg">Click New Event to create your first point</p>';
+
+function createNoPointViewTemplate(isLoading) {
+  const noPointTextValue = isLoading ? NoPointsTextType.LOADING : NoPointsTextType.NOPOINTS;
+
+  return `<p class="trip-events__msg">${noPointTextValue}</p>`;
 }
 
 export default class EventEmptyListView extends AbstractView {
+  #isLoading = false;
+
+  constructor(isLoading) {
+    super();
+    this.#isLoading = isLoading;
+  }
+
   get template() {
-    return createEventEmptyListTemplate();
+    return createNoPointViewTemplate(this.#isLoading);
   }
 }
