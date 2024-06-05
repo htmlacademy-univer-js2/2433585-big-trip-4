@@ -6,17 +6,6 @@ const DEFAULT_TYPE = 'taxi';
 const IMG = 'https://loremflickr.com/248/152?random=';
 const IMAGES = [];
 
-const CITIES = [
-  'Moscow',
-  'Paris',
-  'Texas',
-  'Prague',
-  'Budapest',
-  'Vienna',
-  'Morocco',
-  'Kamchatka'
-];
-
 const DISABLED_SORTS = [
   'event',
   'offers'
@@ -42,17 +31,6 @@ const EVENTS = [
   'Check-in',
   'Restaurant',
   'Sightseeing'
-];
-
-const OFFERS = [
-  'Order Uber',
-  'Add luggage',
-  'Switch to comfort',
-  'Rent a car',
-  'Add breakfast',
-  'Book tickets',
-  'Lunch in city',
-  'Upgrade to a business class'
 ];
 
 const IMAGES_COUNT = {
@@ -112,17 +90,26 @@ const UpdateType = {
 const ButtonText = {
   CANCEL: 'Cancel',
   DELETE: 'Delete',
-  SAVE: 'Save'
+  DELETING: 'Deleting',
+  SAVE: 'Save',
+  SAVING: 'Saving',
 };
 
 const Method = {
   GET: 'GET',
   PUT: 'PUT',
+  DELETE: 'DELETE',
+  POST: 'POST',
 };
 
 const NoPointsTextType = {
   NOPOINTS: 'Click New Event to create your first point',
   LOADING: 'Loading...',
+};
+
+const TimeLimit = {
+  LOWER_LIMIT: 350,
+  UPPER_LIMIT: 1000
 };
 
 const Sort = {
@@ -137,6 +124,7 @@ const Sort = {
   }
 };
 
-export {CITIES, EVENTS, OFFERS, IMAGES, Price, IMG, IMAGES_COUNT,
+export {
+  EVENTS, IMAGES, Price, IMG, IMAGES_COUNT, TimeLimit,
   FilterType, filters, Mode, SortType, Sort, EMPTY_POINT,
   UserAction, NoPointsTextType, UpdateType, ButtonText, DISABLED_SORTS, Method };
