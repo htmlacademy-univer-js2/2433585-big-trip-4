@@ -1,32 +1,4 @@
 import dayjs from 'dayjs';
-import duration from 'dayjs/plugin/duration';
-import { getRandomInteger } from './common-utils';
-
-dayjs.extend(duration);
-
-const Duration = {
-  days: 7,
-  hours: 12,
-  minutes: 59,
-};
-
-const date = dayjs().add(getRandomInteger(0, Duration.days), 'day').toDate();
-
-function getDate(next) {
-  const randomDay = getRandomInteger(0, Duration.days);
-  const randomHour = getRandomInteger(1, Duration.hours);
-  const randomMin = getRandomInteger(0, Duration.minutes);
-
-  if (next) {
-    return dayjs(date)
-      .add(randomDay, 'day')
-      .add(randomHour, 'hour')
-      .add(randomMin, 'minute')
-      .toDate();
-  }
-
-  return date;
-}
 
 function getTime(data) {
   return dayjs(data).format('hh:mm');
@@ -46,13 +18,13 @@ function getDateDifference(from, to) {
 
   switch (true) {
     case (difference >= 24 * 60 * 60 * 1000):
-      pointDur = dayjs.duration(difference).format('DD[D] HH[H] mm[M]');
+      pointDur = dayjs(difference).format('DD[D] HH[H] mm[M]');
       break;
     case (difference >= 60 * 60 * 1000):
-      pointDur = dayjs.duration(difference).format('HH[H] mm[M]');
+      pointDur = dayjs(difference).format('HH[H] mm[M]');
       break;
     case (difference < 60 * 60 * 1000):
-      pointDur = dayjs.duration(difference).format('mm[M]');
+      pointDur = dayjs(difference).format('mm[M]');
       break;
   }
   return pointDur;
@@ -94,31 +66,18 @@ function sortByEvent(pointFirst, pointSecond) {
   return (pointFirst.type.toLowerCase()).localeCompare(pointSecond.type.toLowerCase());
 }
 
-const generateTime = () => {
-  let beginDate = dayjs().minute(0);
-  const gap = 1000;
-  const getBeginDateMinutes = getRandomInteger(-gap, gap) * 10;
-  const getMinutesGap = getRandomInteger(3, 200) * 10;
-
-  beginDate = beginDate.add(getBeginDateMinutes, 'm');
-  const endDate = beginDate.add(getMinutesGap, 'm').toDate();
-  beginDate = beginDate.toDate();
-
-  return {
-    beginDate,
-    endDate
-  };
-};
-
 function hasBigDifference(point1, point2) {
-  return point1.price !== point2.price || getDateDifference(point1.dateFrom, point1.dateTo) !== getDateDifference(point2.dateFrom, point2.dateTo);
+  return point1.price !== point2.price
+    || getDateDifference(point1.dateFrom, point1.dateTo) !== getDateDifference(point2.dateFrom, point2.dateTo)
+    || point1.destination !== point2.destination
+    || point1.offers !== point2.offers;
 }
 
+
 export {
-  getDate,
   getTime, getMonthAndDate, getDateDifference,
   getFullDate, pastPoint, futurePoint,
   presentPoint, updateItem, sortByPrice,
-  sortByDay, sortByTime, generateTime,
+  sortByDay, sortByTime,
   sortByEvent, sortByOffers, hasBigDifference
 };

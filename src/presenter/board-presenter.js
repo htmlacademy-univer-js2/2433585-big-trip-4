@@ -7,6 +7,7 @@ import SortView from '../view/sort-view';
 import NewPointPresenter from './new-point-presenter.js';
 import PointPresenter from './point-presenter.js';
 import UiBlocker from '../framework/ui-blocker/ui-blocker.js';
+import TripInfoView from '../view/trip-info-view.js';
 
 
 export default class BoardPresenter {
@@ -18,10 +19,12 @@ export default class BoardPresenter {
   #sortComponent = null;
   #noPointComponent = null;
   #isLoading = true;
+  #tripInfoComponent = null;
 
   #pointPresenters = new Map();
   #newPointPresenter = null;
   #eventsComponent = new EventListView();
+  #tripMainContainer = null;
 
   #currentSortType = SortType.DAY;
   #filterType = FilterType.EVERYTHING;
@@ -31,7 +34,8 @@ export default class BoardPresenter {
   });
 
 
-  constructor({ boardContainer, pointModel, citiesModel, offersModel, filterModel, onNewPointDestroy }) {
+  constructor({ tripMainContainer, boardContainer, pointModel, citiesModel, offersModel, filterModel, onNewPointDestroy }) {
+    this.#tripMainContainer = tripMainContainer;
     this.#eventsContainer = boardContainer;
     this.#pointModel = pointModel;
     this.#citiesModel = citiesModel;
@@ -79,6 +83,7 @@ export default class BoardPresenter {
 
     this.#renderPointList();
     this.#renderPoints();
+    this.#renderTripInfoView();
 
     this.#renderSortView();
   }
@@ -103,6 +108,16 @@ export default class BoardPresenter {
     if (resetSortType) {
       this.#currentSortType = SortType.DAY;
     }
+  }
+
+  #renderTripInfoView() {
+    if (this.#tripInfoComponent !== null) {
+      remove(this.#tripInfoComponent);
+    }
+
+    this.#tripInfoComponent = new TripInfoView(this.#pointModel, this.#offersModel, this.#citiesModel);
+
+    render(this.#tripInfoComponent, this.#tripMainContainer, RenderPosition.AFTERBEGIN);
   }
 
   #handleSortTypeChange = (sortType) => {
