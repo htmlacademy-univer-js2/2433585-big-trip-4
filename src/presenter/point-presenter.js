@@ -2,8 +2,8 @@ import PointView from '../view/point-view.js';
 import PointEditView from '../view/point-edit-view.js';
 import { render, replace, remove } from '../framework/render.js';
 import { Mode, UpdateType, UserAction } from '../const.js';
-import { hasBigDifference } from '../utils/point-utils.js';
 import { isEscapeKey } from '../utils/common-utils.js';
+import { hasBigDifference } from '../utils/point-utils.js';
 
 export default class PointPresenter {
   #pointContainer = null;

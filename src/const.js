@@ -1,10 +1,9 @@
 import dayjs from 'dayjs';
-import { getRandomInteger } from './utils/common-utils';
 import { futurePoint, presentPoint, pastPoint, sortByDay, sortByPrice, sortByTime } from './utils/point-utils';
 
 const DEFAULT_TYPE = 'taxi';
 const IMG = 'https://loremflickr.com/248/152?random=';
-const IMAGES = [];
+const CITIES_LENGTH_BORDER = 3;
 
 const DISABLED_SORTS = [
   'event',
@@ -37,10 +36,6 @@ const IMAGES_COUNT = {
   MIN: 1,
   MAX: 4
 };
-
-for (let i = 0; i < IMAGES_COUNT.MAX; i++) {
-  IMAGES.push(`${IMG}${getRandomInteger(IMAGES_COUNT.MIN, IMAGES_COUNT.MAX)}`);
-}
 
 const Price = {
   MIN: 10,
@@ -125,6 +120,6 @@ const Sort = {
 };
 
 export {
-  EVENTS, IMAGES, Price, IMG, IMAGES_COUNT, TimeLimit,
+  EVENTS, Price, IMG, IMAGES_COUNT, TimeLimit,
   FilterType, filters, Mode, SortType, Sort, EMPTY_POINT,
-  UserAction, NoPointsTextType, UpdateType, ButtonText, DISABLED_SORTS, Method };
+  UserAction, NoPointsTextType, UpdateType, ButtonText, DISABLED_SORTS, Method, CITIES_LENGTH_BORDER };
