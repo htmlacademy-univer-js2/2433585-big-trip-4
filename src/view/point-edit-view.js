@@ -8,7 +8,7 @@ import { getFullDate } from '../utils/point-utils.js';
 function createTypesElement(currentType, isDisabled) {
   const result = EVENTS.map((eventType) => `<div class="event__type-item">
               <input id="event-type-${eventType.toLowerCase()}-1" class="event__${eventType.toLowerCase()}-input  visually-hidden" type="radio" name="event-type" value="${eventType.toLowerCase()}" ${currentType === eventType ? 'checked' : ''} ${isDisabled ? 'disabled' : ''}>
-              <label class="event__type-label  event__type-label--${eventType.toLowerCase()}" for="event-type-${eventType.toLowerCase()}-1">${eventType.toLowerCase()}" ${currentType === eventType ? 'checked' : ''} ${isDisabled ? 'disabled' : ''}}</label>
+              <label class="event__type-label  event__type-label--${eventType.toLowerCase()}" for="event-type-${eventType.toLowerCase()}-1">${eventType} ${currentType === eventType ? 'checked' : ''} ${isDisabled ? 'disabled' : ''}</label>
             </div>`);
   return `<fieldset class="event__type-group">
           <legend class="visually-hidden">Event type</legend>

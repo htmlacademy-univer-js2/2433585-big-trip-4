@@ -1,4 +1,3 @@
-import TripInfoView from './view/trip-info-view.js';
 import BoardPresenter from './presenter/board-presenter.js';
 import { RenderPosition, render } from './framework/render.js';
 import PointModel from './model/point-model.js';
@@ -25,6 +24,7 @@ const citiesModel = new CitiesModel(pointApiService);
 const filterModel = new FilterModel();
 const pointModel = new PointModel(pointApiService);
 const boardPresenter = new BoardPresenter({
+  tripMainContainer: tripMainElement,
   boardContainer: tripEvents,
   pointModel, offersModel,
   citiesModel, filterModel,
@@ -35,8 +35,6 @@ const filterPresenter = new FilterPresenter({
   filterModel,
   pointModel
 });
-
-render(new TripInfoView(), tripMainElement, RenderPosition.AFTERBEGIN);
 
 const newPointButtonComponent = new NewPointButtonView({
   onClick: handleNewPointButtonClick,
