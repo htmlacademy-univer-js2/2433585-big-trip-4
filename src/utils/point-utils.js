@@ -58,6 +58,14 @@ function sortByPrice(pointFirst, pointSecond) {
   return pointFirst.basePrice - pointSecond.basePrice;
 }
 
+function sortByOffers(pointFirst, pointSecond) {
+  return pointFirst.offers.length - pointSecond.offers.length;
+}
+
+function sortByEvent(pointFirst, pointSecond) {
+  return (pointFirst.type.toLowerCase()).localeCompare(pointSecond.type.toLowerCase());
+}
+
 function hasBigDifference(point1, point2) {
   return point1.price !== point2.price
     || getDateDifference(point1.dateFrom, point1.dateTo) !== getDateDifference(point2.dateFrom, point2.dateTo)
@@ -67,16 +75,9 @@ function hasBigDifference(point1, point2) {
 
 
 export {
-  getTime,
-  getMonthAndDate,
-  getDateDifference,
-  getFullDate,
-  pastPoint,
-  futurePoint,
-  presentPoint,
-  updateItem,
-  sortByPrice,
-  sortByDay,
-  sortByTime,
-  hasBigDifference
+  getTime, getMonthAndDate, getDateDifference,
+  getFullDate, pastPoint, futurePoint,
+  presentPoint, updateItem, sortByPrice,
+  sortByDay, sortByTime,
+  sortByEvent, sortByOffers, hasBigDifference
 };

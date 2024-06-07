@@ -16,8 +16,8 @@ function createTypesElement(currentType, isDisabled) {
           </fieldset>`;
 }
 
-function createDestinationElement(cities) {
-  const result = cities.map((city) => `<option value="${city.name}"></option>`);
+function createDestinationElement(destinations) {
+  const result = destinations.map((city) => `<option value="${city.name}"></option>`);
   return `<datalist id="destination-list-1">
     ${result.join('')}
   </datalist>`;
@@ -49,10 +49,10 @@ function createImagesElement(currentDestination) {
   return currentPhotos ? currentPhotos.map((img) => `<img class="event__photo" src="${img.src}" alt="Event photo">`).join('') : '';
 }
 
-function createPointEditTemplate({ point, pointCities, pointOffers, isNewPoint }) {
+function createPointEditTemplate({ point, pointDestinations, pointOffers, isNewPoint }) {
   const { type, offers, dateFrom, dateTo, basePrice, isDisabled, isSaving, isDeleting } = point;
   const currentOffers = pointOffers.find((offer) => offer.type === type.toLowerCase());
-  const currentDestination = pointCities.find((destination) => destination.id === point.destination);
+  const currentDestination = pointDestinations.find((destination) => destination.id === point.destination);
 
   return (
     `
@@ -74,7 +74,7 @@ function createPointEditTemplate({ point, pointCities, pointOffers, isNewPoint }
           ${type}
         </label>
         <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${he.encode(currentDestination ? currentDestination.name : '')}" list="destination-list-1" ${isDisabled ? 'disabled' : ''}>
-        ${createDestinationElement(pointCities)}
+        ${createDestinationElement(pointDestinations)}
       </div>
       <div class="event__field-group  event__field-group--time">
         <label class="visually-hidden" for="event-start-time-1">From</label>
@@ -118,15 +118,15 @@ export default class PointEditView extends AbstractStatefulView {
   #handleFormSubmit = null;
   #handleRollUpClick = null;
   #handleEditDelete = null;
-  #cities = null;
+  #destinations = null;
   #offers = null;
   #datePickerFrom = null;
   #datePickerTo = null;
   #isNewPoint = null;
-  constructor({ point = EMPTY_POINT, pointCities, pointOffers, onFormSubmit, onRollUpClick, onEditDelete, isNewPoint = false }) {
+  constructor({ point = EMPTY_POINT, pointDestinations, pointOffers, onFormSubmit, onRollUpClick, onEditDelete, isNewPoint = false }) {
     super();
     this.#offers = pointOffers;
-    this.#cities = pointCities;
+    this.#destinations = pointDestinations;
     this.#handleFormSubmit = onFormSubmit;
     this.#handleRollUpClick = onRollUpClick;
     this.#handleEditDelete = onEditDelete;
@@ -138,7 +138,7 @@ export default class PointEditView extends AbstractStatefulView {
   get template() {
     return createPointEditTemplate({
       point: this._state,
-      pointCities: this.#cities,
+      pointDestinations: this.#destinations,
       pointOffers: this.#offers,
       isNewPoint: this.#isNewPoint
     });
@@ -209,7 +209,7 @@ export default class PointEditView extends AbstractStatefulView {
 
   #pointDestinationChangeHandler = (evt) => {
     evt.preventDefault();
-    const selectedDestination = this.#cities.find((destination) => destination.name === evt.target.value);
+    const selectedDestination = this.#destinations.find((destination) => destination.name === evt.target.value);
     this.updateElement({
       destination: selectedDestination ? selectedDestination.id : null,
     });

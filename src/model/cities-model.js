@@ -18,4 +18,16 @@ export default class CitiesModel {
   getById(id) {
     return this.#cities.find((cit) => cit.id === id);
   }
+
+  getCityID() {
+    return this.#cities.map((cit) => cit.id);
+  }
+
+  getDescription(id) {
+    this.#cities.forEach((cit) => {
+      if (cit.id === id) {
+        return cit.description;
+      }
+    });
+  }
 }
