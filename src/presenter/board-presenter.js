@@ -54,6 +54,10 @@ export default class BoardPresenter {
     this.#filterModel.addObserver(this.#handleModelPoint);
   }
 
+  init() {
+    this.#renderBoard();
+  }
+
   get points() {
     this.#filterType = this.#filterModel.filter;
     const points = this.#pointModel.points;
@@ -64,15 +68,15 @@ export default class BoardPresenter {
         return filteredPoints.sort(sortByTime);
       case SortType.PRICE:
         return filteredPoints.sort(sortByPrice);
-      case SortType.OFFERS:
-        return filteredPoints.sort(sortByOffers);
     }
 
     return filteredPoints;
   }
 
-  init() {
-    this.#renderBoard();
+  createPoint() {
+    this.#currentSortType = SortType.DAY;
+    this.#filterModel.setFilter(UpdateType.MAJOR, FilterType.EVERYTHING);
+    this.#newPointPresenter.init();
   }
 
   #renderBoard() {
@@ -88,11 +92,6 @@ export default class BoardPresenter {
     this.#renderSortView();
   }
 
-  createPoint() {
-    this.#currentSortType = SortType.DAY;
-    this.#filterModel.setFilter(UpdateType.MAJOR, FilterType.EVERYTHING);
-    this.#newPointPresenter.init();
-  }
 
   #clearBoard({ resetSortType = false } = {}) {
     this.#newPointPresenter.destroy();
