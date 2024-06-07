@@ -2,7 +2,6 @@ import dayjs from 'dayjs';
 import { futurePoint, presentPoint, pastPoint, sortByDay, sortByPrice, sortByTime } from './utils/point-utils';
 
 const DEFAULT_TYPE = 'taxi';
-const IMG = 'https://loremflickr.com/248/152?random=';
 const CITIES_LENGTH_BORDER = 3;
 
 const DISABLED_SORTS = [
@@ -31,16 +30,6 @@ const EVENTS = [
   'Restaurant',
   'Sightseeing'
 ];
-
-const IMAGES_COUNT = {
-  MIN: 1,
-  MAX: 4
-};
-
-const Price = {
-  MIN: 10,
-  MAX: 2000
-};
 
 const FilterType = {
   EVERYTHING: 'everything',
@@ -111,15 +100,22 @@ const Sort = {
   [SortType.DAY]: (points) => [...points].sort(sortByDay),
   [SortType.TIME]: (points) => [...points].sort(sortByTime),
   [SortType.PRICE]: (points) => [...points].sort(sortByPrice),
-  [SortType.EVENT]: () => {
-    throw new Error(`Sort by ${SortType.EVENT} is not inplemented`);
-  },
-  [SortType.OFFERS]: () => {
-    throw new Error(`Sort by ${SortType.OFFERS} is not inplemented`);
-  }
 };
 
 export {
-  EVENTS, Price, IMG, IMAGES_COUNT, TimeLimit,
-  FilterType, filters, Mode, SortType, Sort, EMPTY_POINT,
-  UserAction, NoPointsTextType, UpdateType, ButtonText, DISABLED_SORTS, Method, CITIES_LENGTH_BORDER };
+  EVENTS,
+  TimeLimit,
+  FilterType,
+  filters,
+  Mode,
+  SortType,
+  Sort,
+  EMPTY_POINT,
+  UserAction,
+  NoPointsTextType,
+  UpdateType,
+  ButtonText,
+  DISABLED_SORTS,
+  Method,
+  CITIES_LENGTH_BORDER
+};
