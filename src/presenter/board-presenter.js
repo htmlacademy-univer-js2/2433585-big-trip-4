@@ -1,6 +1,6 @@
 import { FilterType, SortType, TimeLimit, UpdateType, UserAction, filters } from '../const';
 import { RenderPosition, remove, render } from '../framework/render.js';
-import { sortByOffers, sortByPrice, sortByTime } from '../utils/point-utils.js';
+import { sortByPrice, sortByTime } from '../utils/point-utils.js';
 import EventEmptyListView from '../view/event-list-empty.js';
 import EventListView from '../view/event-list-view';
 import SortView from '../view/sort-view';
