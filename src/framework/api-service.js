@@ -22,7 +22,7 @@ export default class ApiService {
    */
   async _load({
     url,
-    method = 'GET',
+    method = 'GE',
     body = null,
     headers = new Headers(),
   }) {

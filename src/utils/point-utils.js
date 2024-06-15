@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import { HOURS_PER_DAY, MINISECONDS_PER_SECOND, MINUTES_PER_HOUR, SECONDS_PER_MINUTE } from '../const';
 
 function getTime(data) {
   return dayjs(data).format('hh:mm');
@@ -17,13 +18,13 @@ function getDateDifference(from, to) {
   let pointDur = 0;
 
   switch (true) {
-    case (difference >= 24 * 60 * 60 * 1000):
+    case (difference >= HOURS_PER_DAY * MINUTES_PER_HOUR * SECONDS_PER_MINUTE * MINISECONDS_PER_SECOND):
       pointDur = dayjs(difference).format('DD[D] HH[H] mm[M]');
       break;
-    case (difference >= 60 * 60 * 1000):
+    case (difference >= MINUTES_PER_HOUR * SECONDS_PER_MINUTE * MINISECONDS_PER_SECOND):
       pointDur = dayjs(difference).format('HH[H] mm[M]');
       break;
-    case (difference < 60 * 60 * 1000):
+    case (difference < MINUTES_PER_HOUR * SECONDS_PER_MINUTE * MINISECONDS_PER_SECOND):
       pointDur = dayjs(difference).format('mm[M]');
       break;
   }
@@ -47,15 +48,15 @@ function updateItem(items, update) {
 }
 
 function sortByDay(pointFirst, pointSecond) {
-  return dayjs(pointFirst.dateFrom) - dayjs(pointSecond.dateFrom);
+  return dayjs(pointSecond.dateFrom) - dayjs(pointFirst.dateFrom);
 }
 
 function sortByTime(pointFirst, pointSecond) {
-  return dayjs(pointFirst.dateTo).diff(dayjs(pointFirst.dateFrom)) - dayjs(pointSecond.dateTo).diff(dayjs(pointSecond.dateFrom));
+  return dayjs(pointSecond.dateTo).diff(dayjs(pointSecond.dateFrom)) - dayjs(pointFirst.dateTo).diff(dayjs(pointFirst.dateFrom));
 }
 
 function sortByPrice(pointFirst, pointSecond) {
-  return pointFirst.basePrice - pointSecond.basePrice;
+  return pointSecond.basePrice - pointFirst.basePrice;
 }
 
 function hasBigDifference(point1, point2) {
