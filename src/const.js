@@ -3,6 +3,10 @@ import { futurePoint, presentPoint, pastPoint, sortByDay, sortByPrice, sortByTim
 
 const DEFAULT_TYPE = 'taxi';
 const CITIES_LENGTH_BORDER = 3;
+const HOURS_PER_DAY = 24;
+const MINUTES_PER_HOUR = 60;
+const SECONDS_PER_MINUTE = 60;
+const MINISECONDS_PER_SECOND = 1000;
 
 const DISABLED_SORTS = [
   'event',
@@ -87,8 +91,10 @@ const Method = {
 };
 
 const NoPointsTextType = {
-  NOPOINTS: 'Click New Event to create your first point',
-  LOADING: 'Loading...',
+  'everything': 'Click New Event to create your first point',
+  'past': 'There are no past events now',
+  'present': 'There are no present events now',
+  'future': 'There are no future events now'
 };
 
 const TimeLimit = {
@@ -117,5 +123,9 @@ export {
   ButtonText,
   DISABLED_SORTS,
   Method,
-  CITIES_LENGTH_BORDER
+  CITIES_LENGTH_BORDER,
+  HOURS_PER_DAY,
+  MINUTES_PER_HOUR,
+  MINISECONDS_PER_SECOND,
+  SECONDS_PER_MINUTE
 };

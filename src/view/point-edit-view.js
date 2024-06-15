@@ -7,8 +7,8 @@ import { getFullDate } from '../utils/point-utils.js';
 
 function createTypesElement(currentType, isDisabled) {
   const result = EVENTS.map((eventType) => `<div class="event__type-item">
-              <input id="event-type-${eventType.toLowerCase()}-1" class="event__${eventType.toLowerCase()}-input  visually-hidden" type="radio" name="event-type" value="${eventType.toLowerCase()}" ${currentType === eventType ? 'checked' : ''} ${isDisabled ? 'disabled' : ''}>
-              <label class="event__type-label  event__type-label--${eventType.toLowerCase()}" for="event-type-${eventType.toLowerCase()}-1">${eventType} ${currentType === eventType ? 'checked' : ''} ${isDisabled ? 'disabled' : ''}</label>
+              <input id="event-type-${eventType.toLowerCase()}-1" class="event__type-input  visually-hidden" type="radio" name="event-type" value="${eventType.toLowerCase()}" ${currentType === eventType.toLowerCase() ? 'checked' : ''} ${isDisabled ? 'disabled' : ''}>
+              <label class="event__type-label  event__type-label--${eventType.toLowerCase()}" for="event-type-${eventType.toLowerCase()}-1" ${isDisabled ? 'disabled' : ''}>${eventType}</label>
             </div>`);
   return `<fieldset class="event__type-group">
           <legend class="visually-hidden">Event type</legend>
@@ -16,7 +16,7 @@ function createTypesElement(currentType, isDisabled) {
           </fieldset>`;
 }
 
-function createDestinationElement(cities) {
+function createDestinationListElement(cities) {
   const result = cities.map((city) => `<option value="${city.name}"></option>`);
   return `<datalist id="destination-list-1">
     ${result.join('')}
@@ -42,6 +42,16 @@ function createPointOfferElement(offers, checkedOffers, isDisabled) {
     </div>`).join('');
 
   return `<div class="event__available-offers">${offersElement}</div>`;
+}
+
+function createDestinationElement(currentDestination) {
+  return currentDestination ? `<h3 class="event__section-title  event__section-title--destination ${currentDestination.description ? '' : 'visually-hidden'}">Destination</h3>
+        <p class="event__destination-description ${currentDestination.description ? '' : 'visually-hidden'}">${currentDestination.description}</p>
+        <div class="event__photos-container">
+          <div class="event__photos-tape">
+          ${createImagesElement(currentDestination)}
+          </div>
+        </div>` : '';
 }
 
 function createImagesElement(currentDestination) {
@@ -74,7 +84,7 @@ function createPointEditTemplate({ point, pointCities, pointOffers, isNewPoint }
           ${type}
         </label>
         <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${he.encode(currentDestination ? currentDestination.name : '')}" list="destination-list-1" ${isDisabled ? 'disabled' : ''}>
-        ${createDestinationElement(pointCities)}
+        ${createDestinationListElement(pointCities)}
       </div>
       <div class="event__field-group  event__field-group--time">
         <label class="visually-hidden" for="event-start-time-1">From</label>
@@ -96,18 +106,12 @@ function createPointEditTemplate({ point, pointCities, pointOffers, isNewPoint }
     </header>
     <section class="event__details">
       <section class="event__section  event__section--offers">
-        <h3 class="event__section-title  event__section-title--offers">Offers</h3>
+        <h3 class="event__section-title  event__section-title--offers ${currentOffers.offers.length ? '' : 'visually-hidden'}">Offers</h3>
         ${createPointOfferElement(currentOffers.offers, offers, isDisabled)}
-      <section class="event__section  event__section--destination">
-        <h3 class="event__section-title  event__section-title--destination">Destination</h3>
-        <p class="event__destination-description">${currentDestination ? currentDestination.description : ''}</p>
-        <div class="event__photos-container">
-          <div class="event__photos-tape">
-          ${createImagesElement(currentDestination)}
-          </div>
-        </div>
       </section>
-    </section>
+      <section class="event__section  event__section--destination">
+        ${createDestinationElement(currentDestination)}
+      </section>
   </form>
 </li>
     `

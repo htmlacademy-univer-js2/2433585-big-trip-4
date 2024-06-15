@@ -8,6 +8,7 @@ import NewPointPresenter from './new-point-presenter.js';
 import PointPresenter from './point-presenter.js';
 import UiBlocker from '../framework/ui-blocker/ui-blocker.js';
 import TripInfoView from '../view/trip-info-view.js';
+import LoadingView from '../view/loading-view.js';
 
 
 export default class BoardPresenter {
@@ -20,6 +21,7 @@ export default class BoardPresenter {
   #noPointComponent = null;
   #isLoading = true;
   #tripInfoComponent = null;
+  #loadingViewComponent = null;
 
   #pointPresenters = new Map();
   #newPointPresenter = null;
@@ -80,8 +82,13 @@ export default class BoardPresenter {
   }
 
   #renderBoard() {
-    if (this.points.length === 0 || this.#isLoading) {
+    if (this.points.length === 0 && !this.#isLoading) {
       this.#renderNoPointView();
+      return;
+    }
+
+    if (this.#isLoading) {
+      this.#renderLoadingView();
       return;
     }
 
@@ -99,6 +106,7 @@ export default class BoardPresenter {
     this.#pointPresenters.clear();
 
     remove(this.#sortComponent);
+    remove(this.#loadingViewComponent);
 
     if (this.#noPointComponent) {
       remove(this.#noPointComponent);
@@ -168,8 +176,14 @@ export default class BoardPresenter {
     this.points.forEach((point) => this.#renderPoint(point));
   }
 
+  #renderLoadingView() {
+    this.#loadingViewComponent = new LoadingView();
+
+    render(this.#loadingViewComponent, this.#eventsContainer, RenderPosition.AFTERBEGIN);
+  }
+
   #renderNoPointView() {
-    this.#noPointComponent = new EventEmptyListView(this.#isLoading);
+    this.#noPointComponent = new EventEmptyListView(this.#isLoading, this.#filterType);
 
     render(this.#noPointComponent, this.#eventsContainer, RenderPosition.AFTERBEGIN);
   }
@@ -225,6 +239,7 @@ export default class BoardPresenter {
         break;
       case UpdateType.INIT:
         this.#isLoading = false;
+        remove(this.#loadingViewComponent);
         this.#renderBoard();
         break;
     }
